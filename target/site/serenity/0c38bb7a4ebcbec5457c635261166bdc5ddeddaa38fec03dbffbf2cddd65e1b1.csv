@@ -1,0 +1,3 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Delete Category By ID","As a user I can delete category by ID data with a valid path","SUCCESS","2023-11-03T19:14:30.53432+07:00[Asia/Jakarta]","0.0","0.2"
+"Delete Category By ID","As a user I can't delete category by ID with an invalid path","SUCCESS","2023-11-03T19:14:30.737362+07:00[Asia/Jakarta]","0.0","0.2"

@@ -1,0 +1,5 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Assign Product Rating","As a user I can assign product rating data with a valid path and body request","SUCCESS","2023-11-03T19:14:32.051002+07:00[Asia/Jakarta]","0.0","0.4"
+"Assign Product Rating","As a user I can't assign product ratings with an invalid path","SUCCESS","2023-11-03T19:14:32.463688+07:00[Asia/Jakarta]","0.0","0.19"
+"Assign Product Rating","As a user I can't assign product ratings without path","SUCCESS","2023-11-03T19:14:32.661326+07:00[Asia/Jakarta]","0.0","0.2"
+"Assign Product Rating","As a user I can't set product rating data with a request for the number of ratings exceeding > 5","SUCCESS","2023-11-03T19:14:32.869804+07:00[Asia/Jakarta]","0.0","0.42"

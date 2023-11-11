@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Capabilities</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="bootstrap-icons/bootstrap-icons.css">
+<!-- JQuery -->
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><!-- Required Stylesheets -->
+<link href="bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+
+<!-- Required Javascript -->
+<script src="bootstrap-treeview/dist/bootstrap-treeview.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.13.1/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.13.1/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.13.1/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+<link rel="stylesheet" href="css/core.css"/>
+<link rel="stylesheet" href="css/link.css"/>
+<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/>
+<!--CHART.JS-->
+<script src="chartjs/chart.js"></script>
+<script src="chartjs/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="chartjs/patternomaly.min.js"></script>
+<script>
+    // Register the plugin to all charts:
+    Chart.register(ChartDataLabels);
+</script>
+<!-- JQuery-UI -->
+<link type="text/css" href="jqueryui/1.11.2-start/jquery-ui.min.css" rel="Stylesheet" />
+<script type="text/javascript" src="jqueryui/1.11.2-start/jquery-ui.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.13.1/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.13.1/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.13.1/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#scenario-results").DataTable({
+                "order": [[0, "asc",], [3, "asc",]],
+                "language": {
+                    searchPlaceholder: "Filter",
+                    search: ""
+                },
+                columnDefs: [
+                    {type: 'time-elapsed-dhms', targets: 4}
+                ]
+            })
+            $("#manual-scenario-results").DataTable({
+                "order": [[0, "asc",], [1, "asc",]],
+                "language": {
+                    searchPlaceholder: "Filter",
+                    search: ""
+                },
+            })
+
+            $('.example-table table').DataTable({
+                searching: false,
+                ordering: false,
+                paging: false,
+                info: false
+            });
+
+            $('.example-table-in-scenario table').DataTable({
+                searching: false,
+                ordering: false,
+                paging: false,
+                info: false
+            });
+
+            $('#evidence-table').DataTable(
+                {
+                    searching: false,
+                    ordering: false,
+                    paging: false,
+                    info: false
+                }
+            );
+
+
+            $(".scenario-docs .card-body table").wrap("<div class='table-responsive'></div>");
+
+            $("#requirements-tabs").tabs();
+            $("#test-tabs").tabs();
+
+            var requirementsTree = [{"text":"Products","type":"capability","href":"4aba82b65fb252e6e1d2f39384be14a99c376c1a52bb63d7c3b96b5b5a2015a1.html","nodes":[{"text":"Assign Product Rating","type":"feature","href":"67163e3234b542e557f821ee70a91b32421db0bde3b80706f880a3d1cf5f206a.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e4 scenarios\u003c/span\u003e"]},{"text":"Create Comment Product","type":"feature","href":"35e331eefc11585606550613d381ea64a49f069b72d368c3c391e7d97e7f138c.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e3 scenarios\u003c/span\u003e"]},{"text":"Create New Product","type":"feature","href":"aa6a0f9b2823780d3f1562e19254e7ef9633f49f3d64cf4c8fa032b767b633b3.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e4 scenarios\u003c/span\u003e"]},{"text":"Delete Product By ID","type":"feature","href":"71198a06ff90c305383d9e1aadc055817b5aae4ce206e7fa281b733b23ec5b70.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e2 scenarios\u003c/span\u003e"]},{"text":"Get All Products","type":"feature","href":"fcc482d0480d76c5799cb4bc84972f294502c30ce4e5dc1a061dfcb30ecd0617.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e2 scenarios\u003c/span\u003e"]},{"text":"Get Product By ID","type":"feature","href":"4ef1a63fb6b74c39f824a2224fe87d30d091bf00326fde8a6decac92a31f2731.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e3 scenarios\u003c/span\u003e"]},{"text":"Get Product Comments","type":"feature","href":"0a20471c805826d9103a218787f64440a5d1516037bb9af08303456a0188f38e.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e2 scenarios\u003c/span\u003e"]},{"text":"Get Product Ratings","type":"feature","href":"91b96ad1da3186ca8ad5cf1e45f066b71b6361ad8513a9518dfe71cc0926d866.html","nodes":[],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e2 scenarios\u003c/span\u003e"]}],"selectable":false,"tags":["\u003ca href\u003d\u0027##beforetable\u0027\u003e\u003ci class\u003d\u0027bi bi-check-circle-fill success-icon \u0027 title\u003d\u0027SUCCESS\u0027\u003e\u003c/i\u003e\u003c/a\u003e","\u003cspan class\u003d\u0027feature-count\u0027\u003e8 features\u003c/span\u003e"]}];
+
+            $('#tree').treeview({
+                data: requirementsTree,
+                enableLinks: true,
+                levels: 10,
+                showTags: true,
+                expandIcon: "bi bi-journal-plus",
+                collapseIcon: "bi bi-journal-minus",
+                emptyIcon: "bi bi-journal"
+            });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".scenario-docs > div > p").html(function () {
+                var text = $(this).text().trim().split(" ");
+                var first = text.shift();
+                return (text.length > 0 ? "<strong>" + first + "</strong> " : first) + text.join(" ");
+            });
+        });
+    </script>
+</head>
+
+
+<body class="results-page">
+<div id="topheader">
+    <div id="topbanner">
+        <div id="logo"><a href="index.html"><img src="images/serenity-logo.png" border="0"/></a></div>
+        <div id="projectname-banner" style="float:right">
+            <span class="projectname">
+                <span class="projecttitle">Serenity BDD Report</span>
+                <span class="projectsubtitle"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<div class="middlecontent">
+    <div id="contenttop">
+        <div class="middlebg">
+            <span class="breadcrumbs">
+            <a href='index.html'>Home</a> > <a href="capabilities.html">Requirements</a>
+
+                > <a href="097b48750ce2987b1b8c5e1601936339bb36214e1269675cfdfc5a35c6b9f8f9.html">Api</a>
+
+
+                    > <span class="truncate-40">Products</span>
+
+            </span>
+        </div>
+        <div class="rightbg"></div>
+    </div>
+    <div class="clr"></div>
+
+    <!--/* starts second table*/-->
+
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li >
+            <a href="index.html"><i class="bi bi-journal-check"></i> Overall Test Results</a>
+        </li>
+        <li >
+            <a href="capabilities.html"><i class="bi bi-journal-text"></i> Requirements</a>
+        </li>
+        <li >
+            <a href="dafb266f68444cb7f2451c923d70c1428ac45470c361842b818e6daa9bcd4fa8.html"><i class="bi bi-chat-text"></i> Themes</a>
+        </li>
+        <li class="active">
+            <a href="#"><i class="bi bi-chat-text"></i> Capabilities</a>
+        </li>
+        <li >
+            <a href="576946480b52ad056d6f5bddf874399c83582ecf90963cc074a14c70580e7d9f.html"><i class="bi bi-chat-text"></i> Features</a>
+        </li>
+    </ul>
+    <span class="date-and-time"><a href="build-info.html"><i class="bi bi-info-circle"></i></a> Report generated 03-11-2023 19:14</span>
+    <br style="clear:left"/>
+</div>
+
+    <div class="clr"></div>
+
+    <div id="beforetable"></div>
+    <div id="results-dashboard">
+        <div class="table">
+            <div class=row">
+                <div class="col-sm-12">
+                    <div>
+                        <div clas="table">
+                            <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <span>
+                                            <h2><i class="bi bi-book"></i> Capability: Products</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="requirementNarrativeTitle">
+                                
+                            </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <!-- Requirements result tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#specs"><i class="bi bi-journal-text"></i> Specifications</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#results"><i class="bi bi-speedometer"></i> Test Results</a>
+                            </li>
+                        </ul>
+
+                        <!-- Specifications and Results tabs -->
+                        <div class="card border">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div id="specs" class="tab-pane fade in active">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h3>Feature Coverage By Scenario</h3>
+
+                                                <!-- REQUIREMENTS PIE CHART -->
+                                                    <div class="chart-container" style="position: relative; width:30vw">
+                                                        <canvas id="requirementChart" width="300" height="300"></canvas>
+                                                    </div>
+
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h3>Requirements Overview</h3>
+
+                                                <div id="tree"></div>
+
+                                                <!-- STATS -->
+    <div>
+        <h3><i class="bi bi-speedometer2"></i> Key Statistics</h3>
+        <div>
+            <table class="table table-striped table-hover">
+                <tbody>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-card-checklist"></i> Number of Scenarios
+                    </td>
+                    <td>22</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-caret-right"></i> Total Number of Test Cases
+                    </td>
+                    <td>22</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-flag-fill"></i> Tests Started
+                    </td>
+                    <td>Nov 03, 2023 19:14:32</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-stop-circle"></i> Tests
+                        Finished
+                    </td>
+                    <td>Nov 03, 2023 19:14:38</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-stopwatch"></i> Total
+                        Duration
+                    </td>
+                    <td>6s</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-trophy"></i> Fastest Test
+                    </td>
+                    <td>163ms</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-skip-start"></i> Slowest
+                        Test
+                    </td>
+                    <td>1s</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-stopwatch"></i> Average
+                        Execution Time
+                    </td>
+                    <td>301ms</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-stopwatch-fill"></i> Total
+                        Execution Time
+                    </td>
+                    <td>6s</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                                                <!-- END STATS -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="results" class="tab-pane fade">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h3>Feature Coverage By Scenario</h3>
+                                                <!-- TEST RESULT PIE CHART -->
+                                                    <div class="chart-container" style="position: relative; width:30vw">
+                                                        <canvas id="resultChart" width="300" height="300"></canvas>
+                                                    </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h4><i class="bi bi-check-square"></i> Test Outcomes</h4>
+                                                <!-- Severity bar chart -->
+                                                <div class="chart-container" style="position: relative; width:30vw">
+                                                    <canvas id="severityChart" width="300" height="300"></canvas>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <h4><i class="bi bi-graph-up"></i> Test Performance</h4>
+
+                                                <!-- Duration bar chart -->
+                                                <div class="chart-container" style="position: relative; width:30vw">
+                                                    <canvas id="durationChart" width="300" height="300"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+    <div>
+        <h3><i class="bi bi-speedometer2"></i> Key Statistics</h3>
+        <div>
+            <table class="table table-striped table-hover">
+                <tbody>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-card-checklist"></i> Number of Scenarios
+                    </td>
+                    <td>22</td>
+                    <td>
+                        <i class="bi bi-stopwatch"></i> Total
+                        Duration
+                    </td>
+                    <td>6s</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-caret-right"></i> Total Number of Test Cases
+                    </td>
+                    <td>22</td>
+                    <td>
+                        <i class="bi bi-trophy"></i> Fastest Test
+                    </td>
+                    <td>163ms</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-person"></i> Number of Manual Test Cases
+                    </td>
+                    <td>0</td>
+                    <td>
+                        <i class="bi bi-skip-start"></i> Slowest
+                        Test
+                    </td>
+                    <td>1s</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-flag-fill"></i> Tests Started
+                    </td>
+                    <td>Nov 03, 2023 19:14:32</td>
+                    <td>
+                        <i class="bi bi-stopwatch"></i> Average
+                        Execution Time
+                    </td>
+                    <td>301ms</td>
+                </tr>
+                <tr scope="row">
+                    <td>
+                        <i class="bi bi-stop-circle"></i> Tests
+                        Finished
+                    </td>
+                    <td>Nov 03, 2023 19:14:38</td>
+                    <td>
+                        <i class="bi bi-stopwatch-fill"></i> Total
+                        Execution Time
+                    </td>
+                    <td>6s</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+                                                <h3><i class="bi bi-gear"></i> Automated Tests</h3>
+
+                                                    <table class="scenario-result-table table" id="scenario-results">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>feature</th>
+                                                            <th class="test-name-column">Scenario</th>
+                                                            <th>Context</th>
+                                                            <th>Steps</th>
+                                                            <th>Started</th>
+                                                            <th>Total Duration</th>
+                                                            <th>Result</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="67163e3234b542e557f821ee70a91b32421db0bde3b80706f880a3d1cf5f206a.html">Assign Product Rating</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="3db3b1db8ee044a6364a1c97fe4600bf942304d216181cd017d9a79059b7089f.html">As a user I can assign product rating data with a valid path and body request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>8</td>
+                                                                    <td>19:14:32</td>
+                                                                    <td>403ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="67163e3234b542e557f821ee70a91b32421db0bde3b80706f880a3d1cf5f206a.html">Assign Product Rating</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="85543e282c6474d74f0951e25675149f7926821bd76e68230ecf26c75e090f63.html">As a user I can't assign product ratings with an invalid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>8</td>
+                                                                    <td>19:14:32</td>
+                                                                    <td>190ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="67163e3234b542e557f821ee70a91b32421db0bde3b80706f880a3d1cf5f206a.html">Assign Product Rating</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="ac3d9de37926c547d0018373f0b4742e4c6da6b81eb3001d24e5f6a77e393f4c.html">As a user I can't assign product ratings without path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>8</td>
+                                                                    <td>19:14:32</td>
+                                                                    <td>201ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="67163e3234b542e557f821ee70a91b32421db0bde3b80706f880a3d1cf5f206a.html">Assign Product Rating</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="b1a87084ccc820bd91b16fe4aa34fe1dc8cf951ec3f80e129dee079c4028461b.html">As a user I can't set product rating data with a request for the number of ratings exceeding > 5</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>7</td>
+                                                                    <td>19:14:32</td>
+                                                                    <td>421ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="35e331eefc11585606550613d381ea64a49f069b72d368c3c391e7d97e7f138c.html">Create Comment Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="4c492ce3a77124e2898d24d396b500373ecab60a59137d939267e21400f9c445.html">As a user I can create comment product data with a valid path and body request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>8</td>
+                                                                    <td>19:14:33</td>
+                                                                    <td>418ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="35e331eefc11585606550613d381ea64a49f069b72d368c3c391e7d97e7f138c.html">Create Comment Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="36c220a4919dbc450912623428e34bdaba47aaf92e0aeb6abdae468c325fa2f5.html">As a user I can't create comment product with an invalid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>8</td>
+                                                                    <td>19:14:33</td>
+                                                                    <td>192ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="35e331eefc11585606550613d381ea64a49f069b72d368c3c391e7d97e7f138c.html">Create Comment Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="2877bff83e45f8046f0a45c3e42ce3ca109c5e6fd55f3d20be14a45c081af3aa.html">As a user I can't create comment product data if content field blank request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>9</td>
+                                                                    <td>19:14:33</td>
+                                                                    <td>209ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="aa6a0f9b2823780d3f1562e19254e7ef9633f49f3d64cf4c8fa032b767b633b3.html">Create New Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="8695bd0ad55c1e8e6f7d48046ba2f683ef48ca9ccfa55a5f6c8cd6e551283443.html">As a user I can create new product data with a valid path and body request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>6</td>
+                                                                    <td>19:14:34</td>
+                                                                    <td>216ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="aa6a0f9b2823780d3f1562e19254e7ef9633f49f3d64cf4c8fa032b767b633b3.html">Create New Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="d2e01cfb93c8e4707df75610f847c190dffe10b3fe2f52538aafdcc858b8a4dd.html">As a user I can't create new product without path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>5</td>
+                                                                    <td>19:14:34</td>
+                                                                    <td>191ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="aa6a0f9b2823780d3f1562e19254e7ef9633f49f3d64cf4c8fa032b767b633b3.html">Create New Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="aa44d363b43c1abf4b21d38551f7f12e93b965bf4a2ec22e58faf95db4dbab6e.html">As a user I can't create new product data if name field blank request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>5</td>
+                                                                    <td>19:14:34</td>
+                                                                    <td>245ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="aa6a0f9b2823780d3f1562e19254e7ef9633f49f3d64cf4c8fa032b767b633b3.html">Create New Product</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="f10ab0f20eb6cb98f17184069baa378eb3141243f3b4fd97fe5e72c3139e5b13.html">As a user I can't create new product data if price field blank request</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>5</td>
+                                                                    <td>19:14:34</td>
+                                                                    <td>202ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="71198a06ff90c305383d9e1aadc055817b5aae4ce206e7fa281b733b23ec5b70.html">Delete Product By ID</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="347f93efc6e2f5bdfd8d756cb16ffdc964cabc2e8c72583252ac4965efca9fc3.html">As a user I can delete product by ID data with a valid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:35</td>
+                                                                    <td>199ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="71198a06ff90c305383d9e1aadc055817b5aae4ce206e7fa281b733b23ec5b70.html">Delete Product By ID</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="2717edc4b385b95545852215e2a8bed1bd5c72f91e15aef3aee83ee909db47fb.html">As a user I can't delete product by ID with an invalid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:35</td>
+                                                                    <td>166ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="fcc482d0480d76c5799cb4bc84972f294502c30ce4e5dc1a061dfcb30ecd0617.html">Get All Products</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="51f64f29f5a1689852d7a0582433e96b0b60d0ca332d36e4aedd61511025a28c.html">As a user I can get all product with valid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:35</td>
+                                                                    <td>1s 678ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="fcc482d0480d76c5799cb4bc84972f294502c30ce4e5dc1a061dfcb30ecd0617.html">Get All Products</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="314200d910b596c4c704b6b7e581b45416e8e0d9892899a50674cfb0124823a2.html">As a user I can't get all product without path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:37</td>
+                                                                    <td>172ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="4ef1a63fb6b74c39f824a2224fe87d30d091bf00326fde8a6decac92a31f2731.html">Get Product By ID</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="1a7c5278cb6442014d81876ed22d600419cec7f8aed0597dfbdd0d605449ede5.html">As a user I can get a single product data with a valid ID</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>6</td>
+                                                                    <td>19:14:37</td>
+                                                                    <td>414ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="4ef1a63fb6b74c39f824a2224fe87d30d091bf00326fde8a6decac92a31f2731.html">Get Product By ID</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="e956a58427d334e0d8468e0bc485fe72dc31c467621dc4c898a2841dfe6c366c.html">As a user I cannot get product data with an invalid ID (by entering the ID numbers, letters & symbols at the same time)</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:37</td>
+                                                                    <td>168ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="4ef1a63fb6b74c39f824a2224fe87d30d091bf00326fde8a6decac92a31f2731.html">Get Product By ID</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="d2dcdbd9fb70a2919c3cdfc8735da55ea7cb4ebe12b2dd2e1a386ba4a605c9c5.html">As a user I can't get product data with an invalid ID (by entering an ID number that does not yet exist in the database)</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:37</td>
+                                                                    <td>213ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="0a20471c805826d9103a218787f64440a5d1516037bb9af08303456a0188f38e.html">Get Product Comments</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="b9c9c8638a2419028ab3f23055152e8068eda16976815ffdd0cb35f32c1c38ab.html">As a user I can get product comments data with a valid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:38</td>
+                                                                    <td>163ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="0a20471c805826d9103a218787f64440a5d1516037bb9af08303456a0188f38e.html">Get Product Comments</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="a5804afbb42bf703cf78dfa5e726976fe8a53602975ebc8b8e222368fdedf04c.html">As a user I can't get product comments without path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:38</td>
+                                                                    <td>183ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="91b96ad1da3186ca8ad5cf1e45f066b71b6361ad8513a9518dfe71cc0926d866.html">Get Product Ratings</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="3f29a8f226b604f51271d44150f28820c4b3cb3d0c55c9dee956fd57cb715a88.html">As a user I can get ratings product data with a valid path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:38</td>
+                                                                    <td>209ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="scenario-result SUCCESS">
+                                                                    <td>
+                                                                            <a href="91b96ad1da3186ca8ad5cf1e45f066b71b6361ad8513a9518dfe71cc0926d866.html">Get Product Ratings</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="47f7f55fa01d201d8327a032258f07c5ce82fa73a650d59ebf046689ecba0238.html">As a user I can't get product ratings without path</a>
+                                                                    </td>
+                                                                    <td><span class='context-icon'><i class='bi bi-apple' title='Mac OS X'></i></span><span style="display:none">Mac OS X</span> </td>
+                                                                    <td>4</td>
+                                                                    <td>19:14:38</td>
+                                                                    <td>170ms</td>
+                                                                    <td><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a> <span
+                                                                                style="display:none">SUCCESS</span>
+                                                                    </td>
+                                                                </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3><i class="bi bi-hand-index-thumb"></i> Manual Tests</h3>
+
+                                                    No manual tests were recorded
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="version">Serenity BDD version 3.6.12</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Chart data -->
+    <!-- PIE CHART -->
+    <script>
+
+        // The results pie chart
+        const outcomeChartCtx = document.getElementById('resultChart');
+
+        // Options define for display value on top of bars
+        const outcomeDetailsReports = [
+            { title: 'Passing Test Cases', link: "0af80550c87d1dfe449762f7296c198d7038b799c4a95f9dc10e213616b589ea.html" },
+            { title: 'Pending Test Cases', link: "e04e42b661fe0c6abc1e550beb05c11a036a88cbc4570f59212d5bea4cdb5bc5.html" },
+            { title: 'Ignored Test Cases', link: "2f837818695e17bfe893f87a2a27a99e24c5564d1e6a9ffd4c7e1d5cee7329ed.html" },
+            { title: 'Skipped Test Cases', link: "b69e267746c48bce3e3bf620a57d9652025921311949e76e566e83a9f854cff5.html" },
+            { title: 'Aborted Test Cases',  link: "ef6a69be6fca29ec39bb65de8b05e0fe019d69391300e0adb5970009119ad799.html"},
+            { title: 'Failed Test Cases', link: "f1db252357e78cdff08e46d6e62f379e0d6b1ea444d4541b516907ec88e6b5b2.html"  },
+            { title: 'Broken Test Cases', link: "62ec502e4790719182e562248db790edbf722de31b5bdec69d85a3e3a03cc839.html"    },
+            { title: 'Compromised Test Cases',  link: "8bb4031d120566bc0bcae7febcc992df0a804d457afd06b760229c9aaa31ce04.html" },
+        ]
+        const outcomeData = {
+            labels: ['Passing Test Cases', 'Pending Test Cases', 'Ignored Test Cases', 'Skipped Test Cases', 'Aborted Test Cases', 'Failed Test Cases', 'Broken Test Cases', 'Compromised Test Cases','Undefined Test Cases'],
+            datasets: [{
+                label: 'Test Results',
+                fill: false,
+                data: [{meta: 'Passing tests', value: 22}, {meta: 'Pending tests', value: 0}, {meta: 'Ignored tests', value: 0}, {meta: 'Skipped tests', value: 0}, {meta: 'Aborted tests', value: 0}, {meta: 'Failing tests', value: 0}, {meta: 'Broken tests', value: 0}, {meta: 'Compromised tests', value: 0}],
+                backgroundColor: ['rgba(153,204,51,0.5)','rgba(165, 199, 238, 0.5)','rgba(168, 168, 168, 0.5)','rgba(238, 224, 152, 0.75)','rgba(255, 153, 102, 0.5)','rgba(255, 22, 49, 0.5)','rgba(255, 97, 8, 0.5)','rgba(255, 104, 255, 0.5)','rgba(83, 50, 168, 0.5)'],
+                borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
+                borderWidth: 1,
+            }]
+        }
+        const outcomeOptions = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                    color: '#444444',
+                    'font.weight': 'bold',
+                    formatter: (value, ctx) => {
+                        let sum = 0;
+                        let dataArr = ctx.chart.data.datasets[0].data;
+                        dataArr.map(data => {
+                            sum += data;
+                        });
+                        let percentage = (value * 100 / sum).toFixed(0) + "%";
+                        if (percentage === '0%' || percentage === 'NaN%') {
+                            return '';
+                        } else {
+                            return percentage;
+                        }
+                    },
+                },
+            }
+        }
+
+        const outcomeChart = new Chart(outcomeChartCtx, {
+            type: 'doughnut',
+            data: outcomeData,
+            options: outcomeOptions,
+            plugins: [
+                {
+                    id: 'text',
+                    beforeDraw: function (chart, a, b) {
+                        var width = chart.width,
+                            height = chart.height,
+                            ctx = chart.ctx;
+
+                        ctx.restore();
+                        var fontSize = (height / 200).toFixed(1);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.textBaseline = "middle";
+
+                        var text = "100%"
+                        textX = 10 + Math.round((width - ctx.measureText(text).width) / 2);
+                        textY = (height / 2) - 40;
+
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }]
+        });
+
+        function clickHandler(click) {
+            const points = outcomeChart.getElementsAtEventForMode(click, 'nearest', {intersect: true}, true);
+            if (points.length) {
+                const firstPoint = points[0];
+                window.open(outcomeDetailsReports[firstPoint.index].link, "_self")
+
+            }
+        }
+        outcomeChartCtx.onclick = clickHandler;
+    </script>
+    <!-- END PIE CHART -->
+    <!-- PIE CHART -->
+    <script>
+
+        // The results pie chart
+        const requirementsChartCtx = document.getElementById('requirementChart');
+
+        // Options define for display value on top of bars
+        const requirementsOutcomeDetailsReports = [
+            { title: 'Passing Test Cases', link: "0af80550c87d1dfe449762f7296c198d7038b799c4a95f9dc10e213616b589ea.html" },
+            { title: 'Pending Test Cases', link: "e04e42b661fe0c6abc1e550beb05c11a036a88cbc4570f59212d5bea4cdb5bc5.html" },
+            { title: 'Ignored Test Cases', link: "2f837818695e17bfe893f87a2a27a99e24c5564d1e6a9ffd4c7e1d5cee7329ed.html" },
+            { title: 'Skipped Test Cases', link: "b69e267746c48bce3e3bf620a57d9652025921311949e76e566e83a9f854cff5.html" },
+            { title: 'Aborted Test Cases',  link: "ef6a69be6fca29ec39bb65de8b05e0fe019d69391300e0adb5970009119ad799.html"},
+            { title: 'Failed Test Cases', link: "f1db252357e78cdff08e46d6e62f379e0d6b1ea444d4541b516907ec88e6b5b2.html"  },
+            { title: 'Broken Test Cases', link: "62ec502e4790719182e562248db790edbf722de31b5bdec69d85a3e3a03cc839.html"    },
+            { title: 'Compromised Test Cases',  link: "8bb4031d120566bc0bcae7febcc992df0a804d457afd06b760229c9aaa31ce04.html" },
+            { title: 'Undefined Test Cases',  link: "" },
+        ]
+        const requirementsOutcomeData = {
+            labels: ['Passing Test Cases', 'Pending Test Cases', 'Ignored Test Cases', 'Skipped Test Cases', 'Aborted Test Cases', 'Failed Test Cases', 'Broken Test Cases', 'Compromised Test Cases','Undefined Test Cases'],
+            datasets: [{
+                label: 'Feature Coverage',
+                fill: false,
+                data: [{meta: 'Passing tests', value: 22}, {meta: 'Pending tests', value: 0}, {meta: 'Ignored tests', value: 0}, {meta: 'Skipped tests', value: 0}, {meta: 'Aborted tests', value: 0}, {meta: 'Failing tests', value: 0}, {meta: 'Broken tests', value: 0}, {meta: 'Compromised tests', value: 0}],
+                backgroundColor: ['rgba(153,204,51,0.5)','rgba(165, 199, 238, 0.5)','rgba(168, 168, 168, 0.5)','rgba(238, 224, 152, 0.75)','rgba(255, 153, 102, 0.5)','rgba(255, 22, 49, 0.5)','rgba(255, 97, 8, 0.5)','rgba(255, 104, 255, 0.5)','rgba(83, 50, 168, 0.5)'],
+                borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
+                borderWidth: 1,
+            }]
+        }
+        const requirementsOutcomeOptions = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                    color: '#444444',
+                    'font.weight': 'bold',
+                    formatter: (value, ctx) => {
+                        let sum = 0;
+                        let dataArr = ctx.chart.data.datasets[0].data;
+                        dataArr.map(data => {
+                            sum += data;
+                        });
+                        let percentage = (value * 100 / sum).toFixed(0) + "%";
+                        if (percentage === '0%' || percentage === 'NaN%') {
+                            return '';
+                        } else {
+                            return percentage;
+                        }
+                    },
+                },
+            }
+        }
+
+        const requirementsChart = new Chart(requirementsChartCtx, {
+            type: 'doughnut',
+            data: requirementsOutcomeData,
+            options: requirementsOutcomeOptions,
+            plugins: [
+                {
+                    id: 'text',
+                    beforeDraw: function (chart, a, b) {
+                        var width = chart.width,
+                            height = chart.height,
+                            ctx = chart.ctx;
+
+                        ctx.restore();
+                        var fontSize = (height / 200).toFixed(1);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.textBaseline = "middle";
+
+                        var text = "100%"
+                        textX = 10 + Math.round((width - ctx.measureText(text).width) / 2);
+                        textY = (height / 2) - 40;
+
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }]
+        });
+
+        function reqsClickHandler(click) {
+            const points = requirementsChart.getElementsAtEventForMode(click, 'nearest', {intersect: true}, true);
+            if (points.length && requirementsOutcomeDetailsReports[firstPoint.index].link) {
+                const firstPoint = points[0];
+                window.open(requirementsOutcomeDetailsReports[firstPoint.index].link, "_self")
+
+            }
+        }
+        requirementsChartCtx.onclick = reqsClickHandler;
+    </script>
+    <!-- END PIE CHART -->
+
+    <!-- SUMMARY BAR CHART -->
+    <script>
+
+        // The Severity bar chart
+        const severityChartCtx = document.getElementById('severityChart');
+
+        // Options define for display value on top of bars
+
+        const severityDetailsReports = [
+            { title: 'Passing Scenarios', link: "0af80550c87d1dfe449762f7296c198d7038b799c4a95f9dc10e213616b589ea.html" },
+            { title: 'Pending Scenarios', link: "e04e42b661fe0c6abc1e550beb05c11a036a88cbc4570f59212d5bea4cdb5bc5.html" },
+            { title: 'Ignored Scenarios', link: "2f837818695e17bfe893f87a2a27a99e24c5564d1e6a9ffd4c7e1d5cee7329ed.html" },
+            { title: 'Skipped Scenarios', link: "b69e267746c48bce3e3bf620a57d9652025921311949e76e566e83a9f854cff5.html" },
+            { title: 'Aborted Scenarios',  link: "ef6a69be6fca29ec39bb65de8b05e0fe019d69391300e0adb5970009119ad799.html"},
+            { title: 'Failed Scenarios', link: "f1db252357e78cdff08e46d6e62f379e0d6b1ea444d4541b516907ec88e6b5b2.html"  },
+            { title: 'Broken Scenarios', link: "62ec502e4790719182e562248db790edbf722de31b5bdec69d85a3e3a03cc839.html"    },
+            { title: 'Compromised Scenarios',  link: "8bb4031d120566bc0bcae7febcc992df0a804d457afd06b760229c9aaa31ce04.html" },
+        ]
+        const severityData = {
+            labels: ['Passing', 'Pending', 'Ignored', 'Skipped', 'Aborted', 'Failed', 'Broken', 'Compromised'],
+            datasets: [
+                {
+                    label: 'Automated',
+                    data: [22,0,0,0,0,0,0,0],
+                    backgroundColor: ['rgba(153,204,51,0.5)','rgba(165, 199, 238, 0.5)','rgba(168, 168, 168, 0.5)','rgba(238, 224, 152, 0.75)','rgba(255, 153, 102, 0.5)','rgba(255, 22, 49, 0.5)','rgba(255, 97, 8, 0.5)','rgba(255, 104, 255, 0.5)','rgba(83, 50, 168, 0.5)'],
+                    borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Manual',
+                    data: [0,0,0,0,0,0,0,0],
+                    backgroundColor: ['rgba(153,204,51,0.25)','rgba(165, 199, 238, 0.25)','rgba(168, 168, 168, 0.25)','rgba(238, 224, 152, 0.375)','rgba(255, 153, 102, 0.25)','rgba(255, 22, 49, 0.25)','rgba(255, 97, 8, 0.25)','rgba(255, 104, 255, 0.25)','rgba(83, 50, 168, 0.25)'],
+                    borderColor: ['rgba(153,204,51,1)','rgba(165, 199, 238, 1)','rgba(168, 168, 168, 1)','rgba(238, 224, 152, 1)','rgba(255, 153, 102, 1)','rgba(255, 22, 49, 1)','rgba(255, 97, 8, 1)','rgba(255, 104, 255, 1)','rgba(83, 50, 168, 1)'],
+                    borderWidth: 1
+                },
+
+            ]
+        }
+        const severityOptions = {
+            responsive: true,
+            skipNull: true,
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
+                }
+            },
+            plugins: {
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                    color: '#444444',
+                    'font.weight': 'bold',
+                    formatter: (value, ctx) => {
+                        if (value === 0) {
+                            return '';
+                        } else {
+                            return value;
+                        }
+                    },
+                }
+            }
+        }
+        const severityChart = new Chart(severityChartCtx, {
+            type: 'bar',
+            data: severityData,
+            options: severityOptions
+        });
+
+        function clickHandler(click) {
+            const points = severityChart.getElementsAtEventForMode(click, 'nearest', {intersect: true}, true);
+            if (points.length) {
+                const firstPoint = points[0];
+                window.open(severityDetailsReports[firstPoint.index].link, "_self")
+
+            }
+        }
+        severityChartCtx.onclick = clickHandler;
+    </script>
+    <!-- END SUMMARY CHART -->
+
+    <!-- DURATION CHART -->
+    <script>
+
+        // Options define for display value on top of bars
+        const durationDetailsReports = [
+                {title: "Under 1 second", link: "c00175b5f631347d8616840f7919bd6c1b44635ad4fd387744a6602f2d3fbc57.html"},
+                {title: "1 to 10 seconds", link: "31c06e3760d852ee7dbd3c358d2457dfdbd105d6c6647764e7d76e29bfedb589.html"},
+                {title: "10 to 30 seconds", link: "54be80a0f255543740e58f34223e4f69e5a70d8369cedadcb46a8d0875f9ab48.html"},
+                {title: "30 to 60 seconds", link: "20ba58fe7f5d434513896de8126565359acbf0f46377db0f8e0f02c068168ebb.html"},
+                {title: "1 to 2 minutes", link: "be22a0178392a865c521285d6ac99c1abcd8cfed2ccf0c71dc77fa9830d5ef44.html"},
+                {title: "2 to 5 minutes", link: "0fc63fbf8fe5265bbd0fbddb2381c677f08726edeb682b234902a4e11722ba62.html"},
+                {title: "5 to 10 minutes", link: "3afed7529b7a3542436318505e27df5852896bf0950305fb0eddba01bf0053e7.html"},
+                {title: "10 minutes or over", link: "168ebecd42b1d04d0926712e2248b4261053bc00eefd6281170d8ff3162bec68.html"},
+        ]
+        // The Severity bar chart
+        const durationChartCtx = document.getElementById('durationChart');
+
+        // Options define for display value on top of bars
+
+        const durationData = {
+            labels: ['Under 1 second','1 to 10 seconds','10 to 30 seconds','30 to 60 seconds','1 to 2 minutes','2 to 5 minutes','5 to 10 minutes','10 minutes or over'],
+            datasets: [{
+                label: 'Number of tests per duration',
+                fill: false,
+                data: ['21','1','0','0','0','0','0','0'],
+                backgroundColor: 'rgba(83, 146, 255,0.5)',
+                borderColor: 'rgba(83, 146, 255, 1)',
+            }]
+        }
+        const durationOptions = {
+            responsive: true,
+            plugins: {
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                    color: '#444444',
+                    'font.weight': 'bold',
+                    formatter: (value, ctx) => {
+                        if (value > 0) {
+                            return value;
+                        } else {
+                            return '';
+                        }
+                    },
+                },
+                tooltip: {
+                    enabled: true,
+                    usePointStyle: true,
+                    callbacks: {
+                        label: (data) => {
+                            return data.parsed.y + ' tests'
+                        }
+                    },
+                },
+            },
+        }
+
+        const durationChart = new Chart(durationChartCtx, {
+            type: 'bar',
+            data: durationData,
+            options: durationOptions
+        });
+
+        function durationClickHandler(click) {
+            const points = durationChart.getElementsAtEventForMode(click, 'nearest', {intersect: true}, true);
+            if (points.length) {
+                const firstPoint = points[0];
+                window.open(durationDetailsReports[firstPoint.index].link, "_self")
+
+            }
+        }
+
+        durationChartCtx.onclick = durationClickHandler;
+    </script>
+    <!-- END DURATION CHART -->
+</body>
+</html>

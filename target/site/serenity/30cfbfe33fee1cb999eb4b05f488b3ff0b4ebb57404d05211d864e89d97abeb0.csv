@@ -1,0 +1,4 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Get Product By ID","As a user I can get a single product data with a valid ID","SUCCESS","2023-11-03T19:14:37.263914+07:00[Asia/Jakarta]","0.0","0.41"
+"Get Product By ID","As a user I cannot get product data with an invalid ID (by entering the ID numbers, letters & symbols at the same time)","SUCCESS","2023-11-03T19:14:37.6831+07:00[Asia/Jakarta]","0.0","0.17"
+"Get Product By ID","As a user I can't get product data with an invalid ID (by entering an ID number that does not yet exist in the database)","SUCCESS","2023-11-03T19:14:37.855777+07:00[Asia/Jakarta]","0.0","0.21"

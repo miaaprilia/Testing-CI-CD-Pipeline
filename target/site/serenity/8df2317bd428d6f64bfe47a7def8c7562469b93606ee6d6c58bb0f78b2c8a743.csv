@@ -1,0 +1,3 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Get All Categories","As a user I can get all categories data with a valid path","SUCCESS","2023-11-03T19:14:30.945144+07:00[Asia/Jakarta]","0.0","0.31"
+"Get All Categories","As a user I can't get all categories with an invalid path","SUCCESS","2023-11-03T19:14:31.263773+07:00[Asia/Jakarta]","0.0","0.18"

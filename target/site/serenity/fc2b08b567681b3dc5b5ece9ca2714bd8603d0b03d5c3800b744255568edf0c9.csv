@@ -1,0 +1,5 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Create New Product","As a user I can create new product data with a valid path and body request","SUCCESS","2023-11-03T19:14:34.132315+07:00[Asia/Jakarta]","0.0","0.22"
+"Create New Product","As a user I can't create new product without path","SUCCESS","2023-11-03T19:14:34.359228+07:00[Asia/Jakarta]","0.0","0.19"
+"Create New Product","As a user I can't create new product data if name field blank request","SUCCESS","2023-11-03T19:14:34.556217+07:00[Asia/Jakarta]","0.0","0.25"
+"Create New Product","As a user I can't create new product data if price field blank request","SUCCESS","2023-11-03T19:14:34.808735+07:00[Asia/Jakarta]","0.0","0.2"

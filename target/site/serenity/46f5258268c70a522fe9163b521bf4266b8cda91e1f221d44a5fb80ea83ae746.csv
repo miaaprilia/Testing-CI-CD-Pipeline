@@ -1,0 +1,3 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Delete Product By ID","As a user I can delete product by ID data with a valid path","SUCCESS","2023-11-03T19:14:35.017184+07:00[Asia/Jakarta]","0.0","0.2"
+"Delete Product By ID","As a user I can't delete product by ID with an invalid path","SUCCESS","2023-11-03T19:14:35.228283+07:00[Asia/Jakarta]","0.0","0.17"

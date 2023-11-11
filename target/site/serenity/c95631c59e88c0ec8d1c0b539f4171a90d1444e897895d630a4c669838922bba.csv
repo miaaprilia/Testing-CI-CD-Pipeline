@@ -1,0 +1,3 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Hello","As a user I can index data with a valid path and body request","SUCCESS","2023-11-03T19:14:27.181385+07:00[Asia/Jakarta]","0.0","0.16"
+"Hello","As a user I can't index with an invalid path","SUCCESS","2023-11-03T19:14:27.347734+07:00[Asia/Jakarta]","0.0","0.16"
