@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Testing CI/CD Pipeline</artifactId>
+    <artifactId>Testing-CI-CD-Pipeline</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
