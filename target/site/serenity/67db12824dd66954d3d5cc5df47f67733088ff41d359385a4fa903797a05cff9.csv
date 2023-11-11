@@ -1,4 +1,0 @@
-"Story","Title","Result","Date","Stability","Duration (s)"
-"Create Comment Product","As a user I can create comment product data with a valid path and body request","SUCCESS","2023-11-03T19:14:33.297428+07:00[Asia/Jakarta]","0.0","0.42"
-"Create Comment Product","As a user I can't create comment product with an invalid path","SUCCESS","2023-11-03T19:14:33.72073+07:00[Asia/Jakarta]","0.0","0.19"
-"Create Comment Product","As a user I can't create comment product data if content field blank request","SUCCESS","2023-11-03T19:14:33.917794+07:00[Asia/Jakarta]","0.0","0.21"

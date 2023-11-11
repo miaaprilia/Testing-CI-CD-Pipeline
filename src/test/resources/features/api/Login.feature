@@ -52,8 +52,8 @@ Feature: Login User
     Then I received status code 400 Bad Request in request to login user
     And I received message error "record not found" response
     Examples:
-      | email         | password |
-      | mia@gmail.com | test     |
+      | email                  | password |
+      | miaaprilia28@gmail.com | test     |
 
   Scenario Outline: As a user I can't login with an invalid password
     When I enter a valid email
@@ -63,5 +63,5 @@ Feature: Login User
     And I received message error "email or password is invalid" response
     Examples:
       | email                    | password |
-      | miaaprilia2803@gmail.com | 123      |
+      | miaaprilia2803@gmail.com | tes      |
 

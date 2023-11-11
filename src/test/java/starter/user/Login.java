@@ -118,12 +118,12 @@ public class Login {
                 .post(enterInvalidEmail());
     }
 
-    @Step("I received an error message \"record not found\" response")
+    @Step("I received message error \"record not found\" response")
     public void receivedErrorMessageRecordNotFound() {
         JsonSchemaHelper helper = new JsonSchemaHelper();
         String schema = helper.getResponseSchema(JsonSchema.Login_Invalid_Email_Response_Schema);
         restAssuredThat(response -> response.body(matchesJsonSchema(schema)));
-        restAssuredThat(response -> response.body("'data'", notNullValue()));
+        restAssuredThat(response -> response.body("'error'", notNullValue()));
     }
 
     @Step("I enter an invalid password")

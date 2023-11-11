@@ -1,4 +1,0 @@
-"Story","Title","Result","Date","Stability","Duration (s)"
-"Get Order By ID","As a user I can get order by ID data with a valid path","SUCCESS","2023-11-03T19:14:29.026816+07:00[Asia/Jakarta]","0.0","0.56"
-"Get Order By ID","As a user I cannot get order data with an invalid ID (by entering the ID numbers, letters & symbols at the same time)","SUCCESS","2023-11-03T19:14:29.594246+07:00[Asia/Jakarta]","0.0","0.16"
-"Get Order By ID","As a user I cannot get order data with an invalid ID (by entering an ID number that does not yet exist in the database)","SUCCESS","2023-11-03T19:14:29.764792+07:00[Asia/Jakarta]","0.0","0.18"

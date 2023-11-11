@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$ref": "#/definitions/Welcome",
+  "$ref": "#/definitions/LoginUser",
   "definitions": {
-    "Welcome": {
+    "LoginUser": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -13,7 +13,7 @@
       "required": [
         "data"
       ],
-      "title": "Welcome"
+      "title": "LoginUser"
     }
   }
 }

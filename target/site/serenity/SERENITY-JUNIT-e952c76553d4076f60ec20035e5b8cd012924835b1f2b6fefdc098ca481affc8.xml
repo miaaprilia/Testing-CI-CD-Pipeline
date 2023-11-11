@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><testsuite errors="0" failures="0" name="Hello" skipped="0" tests="2" time="0.32" timestamp="2023-11-03 07:14:27"><testcase name="As a user I can index data with a valid path and body request"/><testcase name="As a user I can't index with an invalid path"/></testsuite>
