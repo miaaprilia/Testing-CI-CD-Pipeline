@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><testsuite errors="0" failures="0" name="Get Product Ratings" skipped="0" tests="2" time="0.38" timestamp="2023-11-03 07:14:38"><testcase name="As a user I can get ratings product data with a valid path"/><testcase name="As a user I can't get product ratings without path"/></testsuite>

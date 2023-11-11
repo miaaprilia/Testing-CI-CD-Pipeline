@@ -1,3 +1,0 @@
-"Story","Title","Result","Date","Stability","Duration (s)"
-"Get Product Ratings","As a user I can get ratings product data with a valid path","SUCCESS","2023-11-03T19:14:38.43155+07:00[Asia/Jakarta]","0.0","0.21"
-"Get Product Ratings","As a user I can't get product ratings without path","SUCCESS","2023-11-03T19:14:38.646048+07:00[Asia/Jakarta]","0.0","0.17"

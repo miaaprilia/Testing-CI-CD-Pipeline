@@ -79,7 +79,7 @@ public class LoginSteps {
         login.sendRequestInvalidEmail(email, password);
     }
 
-    @And("I received an error message \"record not found\" response")
+    @And("I received message error \"record not found\" response")
     public void receivedErrorMessageRecordNotFound() { login.receivedErrorMessageRecordNotFound();}
 
     @And("I enter an invalid password")

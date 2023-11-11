@@ -1,8 +1,0 @@
-"Story","Title","Result","Date","Stability","Duration (s)"
-"Register User","As a new user I can register by filling a valid data","SUCCESS","2023-11-03T19:14:25.581307+07:00[Asia/Jakarta]","0.0","0.35"
-"Register User","As a new user I can't register without path","SUCCESS","2023-11-03T19:14:25.947979+07:00[Asia/Jakarta]","0.0","0.23"
-"Register User","As a new user I can't register if I don't fill in the register request","SUCCESS","2023-11-03T19:14:26.181669+07:00[Asia/Jakarta]","0.0","0.21"
-"Register User","As a new user I can't register if I don't fill in the email request","SUCCESS","2023-11-03T19:14:26.397427+07:00[Asia/Jakarta]","0.0","0.18"
-"Register User","As a new user I can't register if I don't fill in the password request","SUCCESS","2023-11-03T19:14:26.581584+07:00[Asia/Jakarta]","0.0","0.18"
-"Register User","As a new user I can't register if I don't fill in the fullname request","SUCCESS","2023-11-03T19:14:26.770676+07:00[Asia/Jakarta]","0.0","0.2"
-"Register User","As a new user I can't register if the email request format is not appropriate (e.g.","SUCCESS","2023-11-03T19:14:26.970933+07:00[Asia/Jakarta]","0.0","0.2"
