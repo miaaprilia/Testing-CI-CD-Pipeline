@@ -1,0 +1,5 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Get User Information","As a user I can't get user information without path","SUCCESS","2023-11-03T19:14:22.254273+07:00[Asia/Jakarta]","0.0","0.44"
+"Get User Information","As a user I can't get user information without token","SUCCESS","2023-11-03T19:14:22.716879+07:00[Asia/Jakarta]","0.0","0.19"
+"Get User Information","As a user I can't get user information invalid token","SUCCESS","2023-11-03T19:14:22.917769+07:00[Asia/Jakarta]","0.0","0.22"
+"Get User Information","As a user I can't get user information if setting authorization type other than ""Bearer Token""","SUCCESS","2023-11-03T19:14:23.141922+07:00[Asia/Jakarta]","0.0","0.43"

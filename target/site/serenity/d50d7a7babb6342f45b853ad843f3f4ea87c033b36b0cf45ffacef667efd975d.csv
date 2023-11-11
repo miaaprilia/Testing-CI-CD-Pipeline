@@ -1,0 +1,4 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Create New Category","As a user I can create new category data with a valid path","SUCCESS","2023-11-03T19:14:29.950354+07:00[Asia/Jakarta]","0.0","0.18"
+"Create New Category","As a user I can't create new category with an invalid path","SUCCESS","2023-11-03T19:14:30.136946+07:00[Asia/Jakarta]","0.0","0.2"
+"Create New Category","As a user I can't create new category data if content field blank request","SUCCESS","2023-11-03T19:14:30.336952+07:00[Asia/Jakarta]","0.0","0.19"

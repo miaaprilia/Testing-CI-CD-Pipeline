@@ -1,0 +1,4 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Create New Order","As a user I can create new order data with a valid path and body request","SUCCESS","2023-11-03T19:14:27.517449+07:00[Asia/Jakarta]","0.0","0.29"
+"Create New Order","As a user I can't create new order with an invalid path","SUCCESS","2023-11-03T19:14:27.80897+07:00[Asia/Jakarta]","0.0","0.19"
+"Create New Order","As a user I can't create new order data if content field blank request","SUCCESS","2023-11-03T19:14:28.005376+07:00[Asia/Jakarta]","0.0","0.38"
